@@ -4,6 +4,8 @@
  * @subpackage fabrik
  * @copyright	Copyright (C) 2005 - 2011 Pollen 8 Design Ltd. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
+ *
+ * Adds overlay to forms to allow for drag and drop editiing of templates
  */
 
 // no direct access
@@ -38,10 +40,9 @@ class plgSystemFabrik_prefab extends JPlugin
 	function plgSystemFabrik_prefab(& $subject, $config)
 	{
 		parent::__construct($subject, $config);
-
 	}
-	
-	
+
+
 	function onAfterDispatch()
 	{
 		if (!$this->canUse()) {
@@ -60,7 +61,7 @@ class plgSystemFabrik_prefab extends JPlugin
 		$script .= "new Selector();";
 		$document->addScriptDeclaration($script);
 	}
-	
+
 	protected function loadJs()
 	{
 		JHTML::script('art.js', 'media/com_fabrik/js/');
@@ -71,12 +72,12 @@ class plgSystemFabrik_prefab extends JPlugin
 		JHTML::script('drag.group.js', 'plugins/system/fabrik_prefab/');
 		JHTML::script('prefab.js', 'plugins/system/fabrik_prefab/');
 	}
-	
+
 	/**
 	 * get an array of installed plugins
-	 * @return array 
+	 * @return array
 	 */
-	
+
 	protected function getPlugins()
 	{
 		$manager = new FabrikModelPluginmanager();
@@ -101,12 +102,12 @@ class plgSystemFabrik_prefab extends JPlugin
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * should the wysiwyg editor be loaded?
 	 * @return bool
 	 */
-	
+
 	protected function canUse()
 	{
 		$app =& JFactory::getApplication();
