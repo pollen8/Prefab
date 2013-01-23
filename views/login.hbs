@@ -1,0 +1,17 @@
+<h1>Login</h1>
+<div class="row-fluid">
+	<a href="/register">Register</a>	
+	<form method="post" action="/login">
+		<fieldset>
+			<legend>Log in</legend>
+			<label>Username:</label>
+			<input type="text" name="username" />
+			<label>Password: </label>
+			<input type="password" name="password" />
+			<input type="" name="redirect" value="{{referrer}}" />
+		</fieldset>
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Login</button>
+		</div>
+	</form>
+</div>

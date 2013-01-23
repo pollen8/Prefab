@@ -1,0 +1,113 @@
+`
+
+	{
+		app: 'Todo'
+		description: 'My todos',
+		creator: 1,
+		createDate: 'yyyy-mm-dd',
+		layout: '<div class="row-fluid">
+					<div class="span6">{{widgets.list.1}}</div>
+					<div class="span6">{{widgets.list.1.form}}</div>
+				</div>",
+		lists: [{
+			id: 1,
+			label: 'Outstanding Tasks',
+			order: [{element: 1, direction: 'desc', default: true}]
+			columns: [{element: 2, label: 'date', filter: {type: field}, {element: 1, label: ''}],
+			layout: '<table>
+						<thead>
+							<tr>
+								<th>{{tasks.name.label}}</th>
+								<th>{{tasks.createdate.label}}</th>
+							</tr>
+						</thead>
+						<tbody>
+						{{#each rows}}
+							<tr>
+								<td>{{this.name}}</td>
+								<td>{{this.createdate}}</td>
+							</tr>
+						{{/each}}
+					</table>'
+			form: {
+					id: 1
+					label: 'Test form',
+					groups: [1],
+					controls: ['submit', 'reset'],
+					layout: '<form method="{action}">
+						<fieldset data-group="{group.1.id}">
+							<!-- elements should be restricted to be inside their groups field set -->
+							<legend>{groups.1.label}</legend>
+							<div class="row-fluid">
+								<div class="span6">
+									<label>{{task.name.label}} {{tasks.name.field}}</label>
+								</div>
+								<div class="span6">
+									<label>{{tasks.createdate.label}} {{tasks.createdate.field}}</label>
+								</div>
+							</div>
+						</fieldset>
+
+						{{controls.submit}}
+						{{controls.reset}}
+						</form>'
+				}
+		}]
+	}
+
+	// Groups & elements are not in apps - so they can be reused in multiple apps.
+	
+	groups: [
+			{
+				id: 1,
+				creator: 1,
+				name: 'tasks',
+				label: 'Tasks',
+				repeat: false,
+				repeats: {min: 0, max: 10}
+				elements: [1, 2]
+			}
+		],
+	elements: [
+			{
+				id: 1,
+				creator: 1,
+				label: 'Task name',
+				field: {
+					group1: '<input type="text" length="20" placeholder="Enter a task" value="{{this.value}}"/>',
+					group2: '{{this.value}}'
+				},
+				name 'name',
+				plugin : {type: 'field', length: 20, password: false, placeholder: 'Enter a task'},
+				group: 1,
+				tip: 'tip text'
+			},
+			{
+				id: 2,
+				creator: 1, 
+				label: 'Create date',
+				name: 'createdate',
+				field: '<input type="date" length="10" />',
+				plugin : {type: 'date', length: 10,
+				group: 1,
+				tip: '',
+				validations: [{type: 'notempty', msg: 'please enter a create date}]
+			},
+		]
+		
+
+	user: {
+		id: 1,
+		name: 'Rob',
+		email: 'rob@test.com'
+		groups: [1, 2]
+	}
+
+	groups: {
+		id: 1,
+		label: 'Registered',
+		adaptors: [{site: 'http://myblog.com', 'type': 'Joomla', equivalent: 3}] // Map view access level of 3 to group id = 1
+	}
+
+
+`

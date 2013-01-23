@@ -1,0 +1,27 @@
+{
+    "name": "prefab", 
+    "version": "0.1.0", 
+    "private": true, 
+    "dependencies": {
+        "express": ">= 3.0", 
+        "express-hbs": "*",
+        "less": "1.x",
+        "connect-assets": "2.x",
+        "colors": "0.x",
+        "underscore": "*",
+        "async": "*",
+        "mongodb": "*",
+        "mongoose": "*",
+        "socket.io": "*",
+        "socket.io-mongo": "*",
+        "mime": "*",
+        "gm": "*",
+        "password-hash": "*",
+        "mongoose-forms": "*"
+        
+    },
+    "engines": {
+        "node": "~0.6.0"
+    }
+}
+	
