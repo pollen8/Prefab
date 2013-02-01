@@ -18,6 +18,7 @@ requirejs.config({
 
 console.log('app.js');
 
+
 requirejs(['mootools', 'mootools-more', 'app/bootstrap-grid-builder'], function () {
 	console.log('grid builder loaded');
 });

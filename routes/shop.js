@@ -8,7 +8,8 @@ module.exports = function (app, io) {
 	
 	Access = require('../models/access');
 	Model = require('../models/prefab');
-	
+	Model.setIo(io);
+
 	var async = require('async');
 	
 	/**

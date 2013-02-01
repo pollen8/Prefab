@@ -1,5 +1,5 @@
 
-define(['app/config', 'app/lang', 'mootools', 'mootools-more'], function (config, lang) {
+define(['app/config', 'app/lang', 'app/socket', 'mootools', 'mootools-more'], function (config, lang, socket) {
 	
 	// Class name for divs that are grid buildable
 	var container = 'grid-builder';
@@ -14,6 +14,8 @@ define(['app/config', 'app/lang', 'mootools', 'mootools-more'], function (config
 	
 	var dragging = false;
 	
+	//io.connect(socket.js);
+
 	var outside = function (event, element) {
 		
 		var c = element.getCoordinates();
@@ -149,6 +151,7 @@ define(['app/config', 'app/lang', 'mootools', 'mootools-more'], function (config
 		});
 		
 		document.addEvent('click:relay(a[data-element])', function (e, target) {
+			e.preventDefault();
 			var field = target.get('data-element');
 			var direction = target.get('data-direction');
 			if (typeOf(direction) === 'null') {
@@ -166,6 +169,11 @@ define(['app/config', 'app/lang', 'mootools', 'mootools-more'], function (config
 				}
 				areas.push(newArea);
 				sorter.addItems(div);
+				// @TODO - get application name from form.
+				socket.emit('addFields', 'shop', [{schemaType: 'String', 'label': 'YAN Name', 'name': 'YAN Name'}]);
+				socket.on('addFields', function () {
+					console.log('received add fields from socketio');
+				});
 			}
 			hideAllEditors();
 		});

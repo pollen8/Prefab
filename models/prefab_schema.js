@@ -5,7 +5,7 @@ Schema = mongoose.Schema;
 
 var FieldSchema = new Schema({
 	schemaType: {type: String, required: true},
-	name: {type: String, required: true, lowercase: true, trim: true},
+	name: {type: String, required: true, lowercase: true, trim: true, unique: true},
 	label: String,
 	suboptions: {type: String},
 	tip: {type: String}

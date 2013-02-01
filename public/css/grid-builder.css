@@ -1,0 +1,13 @@
+.grid-builder .row-fluid > div.focus {
+	border: 1px solid red;
+}
+.grid-builder .row-fluid > div {
+	border: 1px solid transparent;
+}
+
+.addRowWidget {
+	margin-top:-5px;
+	
+	text-algin: center;
+	background-clip: content-box;
+}

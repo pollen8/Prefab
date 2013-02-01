@@ -6,6 +6,7 @@ Schema = mongoose.Schema;
 Prefab = require('./prefab_schema').prefab;
 Field = require('./prefab_schema').field;
 
+var io = null;
 var schemas = {};
 var models = {};
 var apps = {};
@@ -80,22 +81,30 @@ function loadApp(application, cb) {
 				doc.application = application;
 				doc.formGrid = '{}';
 				
-				var field = new Field();
-				field.schemaType = 'String';
-				field.label = 'Name';
-				field.name = 'Name'
-				
-				doc.mySchema.push(field);
-				console.log('doc', doc);
-				doc.save(function (err, docInstance) {
-					console.log('doc save', err);
+				var fields = [{schemaType: 'String', 'label': 'Name', 'name': 'name'},
+				              {schemaType: 'String', 'label': 'Age', 'name': 'age'}];
+				addFields(doc, fields, function (err, docInstance) {
 					apps[application] = doc;
 					cb(err, doc);
 				});
+				
 			}
 			apps[application] = doc;
 			cb(err, doc);
 		}
+	});
+}
+
+function addFields(doc, data, cb) {
+	console.log('add fields', data);
+	for (var i = 0; i < data.length; i++) {
+		var field = new Field(data[i]);
+		doc.mySchema.push(field);
+	}
+	console.log('doc', doc);
+	doc.save(function (err, docInstance) {
+		console.log('doc save', err);
+		cb(err, doc);
 	});
 }
 
@@ -166,6 +175,29 @@ module.exports = {
 	
 	getSlug: function() {
 		return 'name';
+	},
+	
+	setIo: function (io) {
+		io = io;
+		io.sockets.on('connection', function (socket) {
+			
+			socket.on('addFields', function (application, data) {
+				console.log('addfields', application, data);
+				//
+				loadApp(application, function(err, doc) {
+					if (err) {
+						cb(err, doc);
+					} else {
+						addFields(doc, data, function (err, doc) {
+							if (!err) {
+								socket.emit('addFields');
+							}
+						});
+					}
+				});
+			})
+		});
+		
 	}
 }
 
