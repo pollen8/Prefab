@@ -8,7 +8,16 @@ requirejs.config({
     //the paths config could be for a directory.
     paths: {
         app: '../app'
+    },
+    shim: {
+		'mootools-more' : {
+			'deps' : ['mootools']
+		}
     }
 });
 
 console.log('app.js');
+
+requirejs(['mootools', 'mootools-more', 'app/bootstrap-grid-builder'], function () {
+	console.log('grid builder loaded');
+});
